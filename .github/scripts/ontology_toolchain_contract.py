@@ -19,8 +19,37 @@ KEYS={
 def validate(key,obj):
  schema={"$schema":SCHEMA["$schema"],"$ref":"#/$defs/"+KEYS[key],"$defs":SCHEMA["$defs"]}
  Draft202012Validator.check_schema(schema); Draft202012Validator(schema).validate(obj)
- if obj.get("fixture_only") and key=="reasoning_certificate" and obj.get("checker_status")=="accepted":
+ if key=="reasoning_certificate" and obj.get("fixture_only") and obj.get("checker_status")=="accepted":
   raise ValueError("synthetic proof fixture cannot claim checker acceptance")
+ if key=="shacl_report":
+  if obj.get("conforms") != (len(obj.get("results",[])) == 0):
+   raise ValueError("SHACL conforms must be true exactly when the validation report has no results")
+ if key=="bitemporal_fact":
+  if obj.get("valid_to") is not None and parse_time(obj["valid_to"]) <= parse_time(obj["valid_from"]):
+   raise ValueError("valid-time interval end must be after its start")
+  if obj.get("transaction_to") is not None and parse_time(obj["transaction_to"]) <= parse_time(obj["transaction_from"]):
+   raise ValueError("transaction-time interval end must be after its start")
+ if key=="named_graph_authority_profile":
+  composed=set(obj.get("composed_capabilities",[]))
+  if not composed <= set(obj.get("own_capabilities",[])):
+   raise ValueError("composed graph authority exceeds the graph's own capabilities")
+  for parent in obj.get("parent_capability_sets",[]):
+   if not composed <= set(parent):
+    raise ValueError("named-graph composition widens a parent capability set")
+ if key=="agent_ontology_write":
+  origin=obj.get("origin"); state=obj.get("staging_state")
+  if origin=="pdm_import" and (obj.get("source_of_truth_mode")!="read-only" or state!="canonical-import"):
+   raise ValueError("institutional source-of-truth imports must remain read-only")
+  if origin=="agent_write" and state not in {"staged","quarantined","promoted","rejected"}:
+   raise ValueError("agent writes cannot bypass staging and review")
+  if state=="promoted" and (not obj.get("promotion_basis") or not obj.get("promotion_evidence_refs")):
+   raise ValueError("promotion requires human-review or reinforcement evidence")
+ if key=="action_admission_receipt" and obj.get("decision")=="allow":
+  if obj.get("unknown_entity_refs") or obj.get("unknown_attribute_refs") or obj.get("unknown_relationship_refs"):
+   raise ValueError("closed-world admission cannot allow unresolved unknowns")
+ if key=="ontology_change_proposal" and obj.get("status")=="applied":
+  for field in ("blast_radius_report_ref","shacl_report_ref","reasoning_certificate_ref","action_admission_receipt_ref"):
+   if not obj.get(field): raise ValueError("applied ontology changes require "+field)
 def parse_time(v):
  return datetime.fromisoformat(v.replace("Z","+00:00"))
 def expr_ok(expr,active):
