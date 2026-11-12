@@ -5,6 +5,7 @@ import copy,json,sys
 from datetime import datetime
 from pathlib import Path
 from jsonschema import Draft202012Validator
+from rdflib import Graph
 ROOT=Path(__file__).resolve().parents[2]
 SCHEMA=json.loads((ROOT/"schemas/ontology/ontology-toolchain-contracts.v1.schema.json").read_text())
 FIX=json.loads((ROOT/"examples/ontology/ontology-toolchain-contracts.v1.json").read_text())
@@ -58,6 +59,10 @@ def expr_ok(expr,active):
  return all(vals) if expr["kind"]=="all-of" else any(vals)
 def main():
  for key,obj in FIX.items(): validate(key,obj)
+ # Parse standards-based RDF fixtures. This checks Turtle syntax only, not OWL entailment or SHACL execution.
+ alignment_graph=Graph().parse(ROOT/"examples/ontology/alignment-provenance-example.ttl",format="turtle")
+ shacl_graph=Graph().parse(ROOT/"examples/ontology/shacl-validation-report-example.ttl",format="turtle")
+ assert len(alignment_graph)>0 and len(shacl_graph)>0
  report=FIX["shacl_report"]
  assert report["conforms"] is False and len(report["results"])>0
  # SHACL report invariants: conformance is true iff there are no results.
