@@ -83,3 +83,17 @@ Treat every third-party name in that register as a proposed candidate/reference 
 ## Master toolchain coverage register — 2026-11-12
 
 The current public inventory for the original four toolchain documents plus the Intelligence Capabilities source is maintained in the UNIVERSALIS research register: https://github.com/C2O-Chaos-to-Order/Research-for-the-UNIVERSALIS-Ecosystem/blob/implementation/repository-foundation-2026-11-12/TOOLCHAIN_COVERAGE_REGISTER.md. It distinguishes documentation, basic contracts, passing CI, and actual integrations. This public register contains no links to C2O-private owner repositories or policy values.
+
+
+## Ontology toolchain — ninth owner-supplied source — 2026-11-12
+
+The canonical Master Ontology text remains authoritative and unchanged. This repository now contains the open ontology toolchain contract foundation.
+
+- [UNIVERSALIS open ontology architecture](https://github.com/C2O-Chaos-to-Order/The-UNIVERSALIS-Ontology/blob/implementation/repository-foundation-2026-11-12/ONTOLOGY_TOOLCHAIN_ARCHITECTURE.md).
+- [Shared portable ontology schemas](https://github.com/C2O-Chaos-to-Order/The-UNIVERSALIS-Ontology/blob/implementation/repository-foundation-2026-11-12/schemas/ontology/ontology-toolchain-contracts.v1.schema.json).
+- [SKOS/PROV-O and SHACL RDF fixtures](https://github.com/C2O-Chaos-to-Order/The-UNIVERSALIS-Ontology/tree/implementation/repository-foundation-2026-11-12/examples/ontology).
+- [Validation evidence](https://github.com/C2O-Chaos-to-Order/The-UNIVERSALIS-Ontology/blob/implementation/repository-foundation-2026-11-12/ONTOLOGY_TOOLCHAIN_VALIDATION.md).
+
+Candidate inventory: open-ontologies; Ontosphere; graph-mcp-driver; MNEME; Ontology-to-Tools Compilation / The World Avatar; Entigram; OpenBKN; Semantica; ontobricks; cassis-cli; Quipu; PROV-O; SKOS. These remain candidates/reference patterns pending canonical-source, license, security, version, profile and independent behavior verification. No candidate is claimed installed or integrated.
+
+The portable schema layer contains no C2O-private ontology or authority data. See the [public master toolchain coverage register](https://github.com/C2O-Chaos-to-Order/Research-for-the-UNIVERSALIS-Ecosystem/blob/implementation/repository-foundation-2026-11-12/TOOLCHAIN_COVERAGE_REGISTER.md) for the complete nine-inventory map.
