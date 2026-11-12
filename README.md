@@ -32,3 +32,15 @@ The Markdown file is the canonical text. The `.docx` is a convenience companion.
 | [The-UNIVERSALIS-Intelligence-Powers](https://github.com/C2O-Chaos-to-Order/The-UNIVERSALIS-Intelligence-Powers) | Intelligence Powers (I-P) |
 | [The-UNIVERSALIS-Ontology](https://github.com/C2O-Chaos-to-Order/The-UNIVERSALIS-Ontology) | Master Ontology: Human and Intelligence |
 | [The-UNIVERSALIS-Encyclopedias](https://github.com/C2O-Chaos-to-Order/The-UNIVERSALIS-Encyclopedias) | Public encyclopedia placeholder (no commits as of the 2026-11-10 inventory) |
+
+
+## Ontology toolchain foundation
+
+The canonical `Master_Ontology_Human_and_Intelligence.md` remains the source-of-truth ontology text; its eight foundation schemes and typed relations are unchanged. The implementation branch adds a separate open toolchain layer for versioned ontology artifacts, SKOS alignment, PROV-O provenance, SHACL reports, reasoning certificates, bitemporal records, schema evolution and closed-world write admission.
+
+- [Open ontology toolchain architecture](https://github.com/C2O-Chaos-to-Order/The-UNIVERSALIS-Ontology/blob/implementation/repository-foundation-2026-11-12/ONTOLOGY_TOOLCHAIN_ARCHITECTURE.md)
+- [Portable ontology contract schemas](https://github.com/C2O-Chaos-to-Order/The-UNIVERSALIS-Ontology/tree/implementation/repository-foundation-2026-11-12/schemas/ontology)
+- [RDF/Turtle examples: SKOS + PROV-O and SHACL report](https://github.com/C2O-Chaos-to-Order/The-UNIVERSALIS-Ontology/tree/implementation/repository-foundation-2026-11-12/examples/ontology)
+- [Validation and CI evidence](https://github.com/C2O-Chaos-to-Order/The-UNIVERSALIS-Ontology/blob/implementation/repository-foundation-2026-11-12/ONTOLOGY_TOOLCHAIN_VALIDATION.md)
+
+This public branch contains only portable schemas, synthetic fixtures, example ontology evidence and open toolchain documentation. It contains no C2O-private ontology, policy, named-graph grant, authority token, signing key or operational record.
