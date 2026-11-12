@@ -107,6 +107,11 @@ def main():
  x=copy.deepcopy(FIX); x["bitemporal_fact"]["valid_to"]="2020-01-01T00:00:00Z"; negative.append(("bitemporal interval end before start","bitemporal_fact",x))
  x=copy.deepcopy(FIX); x["reasoning_certificate"]["checker_status"]="accepted"; negative.append(("fixture proof cannot claim accepted","reasoning_certificate",x))
  x=copy.deepcopy(FIX); x["crosswalk_resolution_receipt"]["grounding_confidence"]=2; negative.append(("crosswalk confidence range","crosswalk_resolution_receipt",x))
+ x=copy.deepcopy(FIX); x["crosswalk_resolution_receipt"]["resolution_decision"]="accept"; negative.append(("accepted crosswalk requires reviewer","crosswalk_resolution_receipt",x))
+ x=copy.deepcopy(FIX); x["ontology_change_proposal"].update({"status":"applied","blast_radius_report_ref":"fixture://impact","shacl_report_ref":"fixture://shacl","reasoning_certificate_ref":"fixture://proof","action_admission_receipt_ref":"fixture://admission"}); negative.append(("applied change requires a reviewer","ontology_change_proposal",x))
+ x=copy.deepcopy(FIX); x["conflict_record"]["status"]="resolved"; negative.append(("resolved conflict requires resolution evidence","conflict_record",x))
+ x=copy.deepcopy(FIX); x["bitemporal_fact"]["object_kind"]="blank-node"; negative.append(("blank node fact requires an object reference","bitemporal_fact",x))
+ x=copy.deepcopy(FIX); x["action_admission_receipt"]["evidence_refs"]=[]; negative.append(("admission decision requires evidence","action_admission_receipt",x))
  for label,key,obj in negative:
   try:
    for k,v in obj.items(): validate(k,v)
