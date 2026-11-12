@@ -1,0 +1,299 @@
+{
+  "ontology_artifact": {
+    "schema_version": "1.0.0",
+    "ontology_id": "universalis-master-ontology-fixture",
+    "version": "1.0.0",
+    "artifact_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "graph_ref": "urn:fixture:ontology:human-intelligence",
+    "serialization": "JSON-LD",
+    "logic_profile": "SKOS",
+    "concept_scheme_refs": [
+      "urn:fixture:scheme:H-K",
+      "urn:fixture:scheme:H-C"
+    ],
+    "source_refs": [
+      "fixture://source/master-ontology"
+    ],
+    "provenance_profile_ref": "fixture://prov/profile",
+    "release_status": "proposed",
+    "created_at": "2026-11-12T16:30:00Z",
+    "updated_at": "2026-11-12T16:30:00Z",
+    "limitations": [
+      "Synthetic fixture only."
+    ]
+  },
+  "alignment_mapping": {
+    "schema_version": "1.0.0",
+    "mapping_id": "mapping-fixture-01",
+    "source_ontology_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "target_ontology_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "source_concept_ref": "urn:fixture:H-C-01.01",
+    "target_concept_ref": "urn:external:Perception",
+    "mapping_property": "skos:closeMatch",
+    "method": "structural-graph",
+    "grounding_confidence": 0.78,
+    "decision_status": "proposed",
+    "evidence_refs": [
+      "fixture://alignment/evidence"
+    ],
+    "prov_event_ref": "fixture://prov/alignment-01",
+    "created_at": "2026-11-12T16:30:00Z",
+    "limitations": [
+      "Human-reviewed acceptance has not occurred."
+    ]
+  },
+  "prov_event": {
+    "schema_version": "1.0.0",
+    "event_id": "prov-fixture-01",
+    "prov_type": "prov:Activity",
+    "event_kind": "align",
+    "entity_refs": [
+      "urn:fixture:ontology:human-intelligence"
+    ],
+    "activity_ref": "fixture://activity/alignment",
+    "agent_ref": "fixture://agent/tool",
+    "used_refs": [
+      "fixture://input/ontology"
+    ],
+    "generated_refs": [
+      "fixture://output/mapping"
+    ],
+    "derived_from_refs": [
+      "fixture://input/ontology"
+    ],
+    "was_revision_of_ref": "fixture://mapping/previous",
+    "had_role_ref": "fixture://role/alignment-agent",
+    "started_at": "2026-11-12T16:30:00Z",
+    "ended_at": "2026-11-12T16:30:00Z",
+    "event_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "fixture_only": true
+  },
+  "shacl_report": {
+    "schema_version": "1.0.0",
+    "report_id": "shacl-fixture-01",
+    "shacl_version": "SHACL-1.0",
+    "data_graph_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "shapes_graph_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "conforms": false,
+    "results": [
+      {
+        "focus_node": "urn:fixture:concept:01",
+        "result_severity": "sh:Violation",
+        "source_constraint_component": "sh:MinCountConstraintComponent",
+        "result_path": "urn:fixture:vocab:prefLabel",
+        "result_message": "Synthetic finding: preferred label missing.",
+        "source_shape": "urn:fixture:shape:prefLabel"
+      }
+    ],
+    "processor_ref": "fixture://shacl/processor",
+    "processor_version": "0.0.0-fixture",
+    "report_graph_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "generated_at": "2026-11-12T16:30:00Z",
+    "provenance_event_ref": "fixture://prov/shacl-01",
+    "fixture_only": true
+  },
+  "reasoning_certificate": {
+    "schema_version": "1.0.0",
+    "certificate_id": "reasoning-fixture-01",
+    "ontology_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "asserted_graph_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "conclusion_refs": [
+      "urn:fixture:conclusion:01"
+    ],
+    "premise_refs": [
+      "urn:fixture:premise:01"
+    ],
+    "inference_step_count": 3,
+    "certificate_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+    "certificate_artifact_ref": "fixture://proof/not-run",
+    "reasoner_ref": "fixture://reasoner",
+    "reasoner_version": "0.0.0-fixture",
+    "checker_ref": "fixture://lean-checker",
+    "checker_version": "0.0.0-fixture",
+    "checker_status": "not-run",
+    "claim_scope": "derivation-validity-under-declared-asserted-graph-and-assumptions",
+    "assumption_refs": [
+      "fixture://assumption/graph-input"
+    ],
+    "trusted_computing_base_profile_ref": "fixture://tcb/profile",
+    "engine_soundness_status": "not-assessed",
+    "generated_at": "2026-11-12T16:30:00Z",
+    "fixture_only": true
+  },
+  "bitemporal_fact": {
+    "schema_version": "1.0.0",
+    "fact_id": "fact-fixture-01",
+    "subject_ref": "urn:fixture:concept:01",
+    "predicate_ref": "http://www.w3.org/2004/02/skos/core#prefLabel",
+    "object_kind": "literal",
+    "object_lexical": "Synthetic concept",
+    "object_language": "en",
+    "named_graph_ref": "urn:fixture:graph:staged",
+    "trust_label": "provisional",
+    "assertion_state": "asserted",
+    "valid_from": "2026-11-12T16:30:00Z",
+    "valid_to": null,
+    "transaction_from": "2026-11-12T16:30:00Z",
+    "transaction_to": null,
+    "provenance_event_ref": "fixture://prov/fact-01",
+    "record_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+    "close_dont_overwrite": true
+  },
+  "as_of_query": {
+    "schema_version": "1.0.0",
+    "query_id": "as-of-fixture-01",
+    "ontology_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "valid_time_at": "2026-11-12T16:30:00Z",
+    "transaction_time_at": "2026-11-12T16:30:00Z",
+    "named_graph_refs": [
+      "urn:fixture:graph:staged"
+    ],
+    "query_ref": "fixture://query/as-of",
+    "result_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+    "executed_at": "2026-11-12T16:30:00Z",
+    "fixture_only": true
+  },
+  "crosswalk_resolution_receipt": {
+    "schema_version": "1.0.0",
+    "receipt_id": "crosswalk-receipt-01",
+    "event_cid": "cid:fixture-event-01",
+    "mapping_ref": "mapping-fixture-01",
+    "source_concept_ref": "urn:fixture:H-C-01.01",
+    "target_concept_ref": "urn:external:Perception",
+    "mapping_property": "skos:closeMatch",
+    "grounding_confidence": 0.78,
+    "resolution_decision": "human-review-required",
+    "evidence_refs": [
+      "fixture://alignment/evidence"
+    ],
+    "provenance_event_ref": "fixture://prov/alignment-01",
+    "resolved_at": "2026-11-12T16:30:00Z",
+    "fixture_only": true
+  },
+  "agent_ontology_write": {
+    "schema_version": "1.0.0",
+    "write_id": "agent-write-fixture-01",
+    "ontology_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "origin": "agent_write",
+    "source_of_truth_mode": "read-only",
+    "confidence": 0.6,
+    "staging_state": "quarantined",
+    "conflict_screen_status": "conflicts-found",
+    "conflict_refs": [
+      "fixture://conflict/01"
+    ],
+    "source_ref": "fixture://source/agent",
+    "prov_event_ref": "fixture://prov/write-01",
+    "created_at": "2026-11-12T16:30:00Z",
+    "fixture_only": true
+  },
+  "named_graph_authority_profile": {
+    "schema_version": "1.0.0",
+    "graph_ref": "urn:fixture:graph:composed",
+    "graph_version": "1.0.0",
+    "authority_subject_ref": "fixture://principal:agent",
+    "trust_label": "provisional",
+    "own_capabilities": [
+      "read",
+      "write"
+    ],
+    "parent_capability_sets": [
+      [
+        "read",
+        "write"
+      ],
+      [
+        "read"
+      ]
+    ],
+    "composed_capabilities": [
+      "read"
+    ],
+    "composition_rule": "restrictive-intersection",
+    "composition_never_widens": true,
+    "provenance_event_ref": "fixture://prov/graph-01",
+    "created_at": "2026-11-12T16:30:00Z",
+    "fixture_only": true
+  },
+  "conflict_record": {
+    "schema_version": "1.0.0",
+    "conflict_id": "conflict-fixture-01",
+    "conflict_kind": "source-disagreement",
+    "subject_refs": [
+      "urn:fixture:concept:01"
+    ],
+    "source_refs": [
+      "fixture://source/a",
+      "fixture://source/b"
+    ],
+    "detection_method_ref": "fixture://method/conflict-screen",
+    "status": "quarantined",
+    "detected_at": "2026-11-12T16:30:00Z",
+    "fixture_only": true
+  },
+  "ontology_change_proposal": {
+    "schema_version": "1.0.0",
+    "change_id": "change-fixture-01",
+    "ontology_id": "universalis-master-ontology-fixture",
+    "source_version": "1.0.0",
+    "target_version": "1.1.0",
+    "source_ontology_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "proposed_ontology_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+    "change_items": [
+      {
+        "change_kind": "add",
+        "concept_or_relation_ref": "urn:fixture:concept:02",
+        "change_summary": "Add a proposed concept."
+      }
+    ],
+    "compatibility": "unknown",
+    "rollback_plan_ref": "fixture://rollback/plan",
+    "status": "proposed",
+    "reviewer_refs": [],
+    "provenance_event_ref": "fixture://prov/change-01",
+    "created_at": "2026-11-12T16:30:00Z",
+    "fixture_only": true
+  },
+  "compiled_tool_contract": {
+    "schema_version": "1.0.0",
+    "tool_id": "ontology-concept-create",
+    "ontology_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "ontology_ref": "urn:fixture:ontology:human-intelligence",
+    "operation": "create",
+    "input_schema_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+    "output_schema_sha256": "6666666666666666666666666666666666666666666666666666666666666666",
+    "constraint_refs": [
+      "urn:fixture:shape:concept"
+    ],
+    "enforcement_phase": "generation-time",
+    "closed_world": true,
+    "unknown_entity_policy": "quarantine",
+    "unknown_attribute_policy": "reject",
+    "unknown_relationship_policy": "reject",
+    "generated_at": "2026-11-12T16:30:00Z",
+    "fixture_only": true
+  },
+  "action_admission_receipt": {
+    "schema_version": "1.0.0",
+    "receipt_id": "admission-fixture-01",
+    "request_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+    "ontology_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "policy_version": "1.0.0",
+    "actor_ref": "fixture://agent",
+    "action_ref": "urn:fixture:action:create",
+    "target_ref": "urn:fixture:concept:02",
+    "decision": "quarantine",
+    "closed_world": true,
+    "unknown_entity_refs": [],
+    "unknown_attribute_refs": [
+      "urn:fixture:unknown-field"
+    ],
+    "unknown_relationship_refs": [],
+    "evidence_refs": [
+      "fixture://validation/report"
+    ],
+    "provenance_event_ref": "fixture://prov/admission-01",
+    "decided_at": "2026-11-12T16:30:00Z",
+    "fixture_only": true
+  }
+}
