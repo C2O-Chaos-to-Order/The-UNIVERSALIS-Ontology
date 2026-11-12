@@ -97,3 +97,10 @@ The canonical Master Ontology text remains authoritative and unchanged. This rep
 Candidate inventory: open-ontologies; Ontosphere; graph-mcp-driver; MNEME; Ontology-to-Tools Compilation / The World Avatar; Entigram; OpenBKN; Semantica; ontobricks; cassis-cli; Quipu; PROV-O; SKOS. These remain candidates/reference patterns pending canonical-source, license, security, version, profile and independent behavior verification. No candidate is claimed installed or integrated.
 
 The portable schema layer contains no C2O-private ontology or authority data. See the [public master toolchain coverage register](https://github.com/C2O-Chaos-to-Order/Research-for-the-UNIVERSALIS-Ecosystem/blob/implementation/repository-foundation-2026-11-12/TOOLCHAIN_COVERAGE_REGISTER.md) for the complete nine-inventory map.
+
+
+## Security and Cybersecurity — eleventh owner-supplied source — 2026-11-12
+
+Canonical public architecture: [UNIVERSALIS Security and Cybersecurity](https://github.com/C2O-Chaos-to-Order/The-UNIVERSALIS-Ecosystem/blob/implementation/repository-foundation-2026-11-12/SECURITY_CYBERSECURITY_ARCHITECTURE.md). The public security contract, synthetic fixtures and validation evidence are linked from that architecture. The [UNIVERSALIS eleven-source master toolchain register](https://github.com/C2O-Chaos-to-Order/Research-for-the-UNIVERSALIS-Ecosystem/blob/implementation/repository-foundation-2026-11-12/TOOLCHAIN_COVERAGE_REGISTER.md) preserves candidate provenance, verification caveats and integration limits.
+
+Public repositories contain only portable contracts and synthetic examples: no C2O-private policies, keys, incident data, authority records or target inventories. External security tools remain candidates until source, license, release, data flow, platform and enforcement behavior are reviewed. No security product or offensive assessment system is claimed integrated.
