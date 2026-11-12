@@ -737,6 +737,23 @@
               "object_lexical"
             ]
           }
+        },
+        {
+          "if": {
+            "properties": {
+              "object_kind": {
+                "const": "blank-node"
+              }
+            },
+            "required": [
+              "object_kind"
+            ]
+          },
+          "then": {
+            "required": [
+              "object_ref"
+            ]
+          }
         }
       ],
       "additionalProperties": false
@@ -871,7 +888,26 @@
         "resolved_at",
         "fixture_only"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "resolution_decision": {
+                "const": "accept"
+              }
+            },
+            "required": [
+              "resolution_decision"
+            ]
+          },
+          "then": {
+            "required": [
+              "reviewer_ref"
+            ]
+          }
+        }
+      ]
     },
     "agentOntologyWrite": {
       "type": "object",
@@ -1188,7 +1224,28 @@
         "detected_at",
         "fixture_only"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "resolved"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "required": [
+              "resolution_ref",
+              "reviewer_ref",
+              "resolved_at"
+            ]
+          }
+        }
+      ]
     },
     "ontologyChangeProposal": {
       "type": "object",
@@ -1333,7 +1390,12 @@
               "reasoning_certificate_ref",
               "action_admission_receipt_ref",
               "reviewer_refs"
-            ]
+            ],
+            "properties": {
+              "reviewer_refs": {
+                "minItems": 1
+              }
+            }
           }
         }
       ],
@@ -1497,7 +1559,8 @@
           "type": "array",
           "items": {
             "$ref": "#/$defs/ref"
-          }
+          },
+          "minItems": 1
         },
         "provenance_event_ref": {
           "$ref": "#/$defs/ref"
