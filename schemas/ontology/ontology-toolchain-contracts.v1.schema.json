@@ -1,0 +1,1626 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:c2o-universalis:ontology-toolchain-contracts:1.0.0",
+  "title": "Portable Ontology Alignment, Validation, Reasoning and Evolution Contracts",
+  "description": "Registry-neutral ontology artifact, alignment, validation, reasoning, provenance, bitemporal, closed-world and evolution records. No C2O-private ontology or authority data.",
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2048
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "ontologyArtifact": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "ontology_id": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+([+-][A-Za-z0-9.-]+)?$"
+        },
+        "artifact_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "graph_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "serialization": {
+          "enum": [
+            "RDF-Turtle",
+            "RDF-XML",
+            "JSON-LD",
+            "N-Triples",
+            "N-Quads",
+            "TriG",
+            "OWL-Functional",
+            "OWL-XML",
+            "Other"
+          ]
+        },
+        "logic_profile": {
+          "enum": [
+            "OWL2-DL",
+            "OWL2-EL",
+            "OWL2-QL",
+            "OWL2-RL",
+            "RDFS",
+            "SKOS",
+            "RDF-SHACL",
+            "project-defined",
+            "none"
+          ]
+        },
+        "concept_scheme_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ref"
+          }
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ref"
+          },
+          "minItems": 1
+        },
+        "provenance_profile_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "release_status": {
+          "enum": [
+            "draft",
+            "proposed",
+            "reviewed",
+            "approved",
+            "deprecated",
+            "withdrawn"
+          ]
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "previous_version_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "schema_version",
+        "ontology_id",
+        "version",
+        "artifact_sha256",
+        "graph_ref",
+        "serialization",
+        "logic_profile",
+        "source_refs",
+        "provenance_profile_ref",
+        "release_status",
+        "created_at",
+        "updated_at"
+      ],
+      "additionalProperties": false
+    },
+    "alignmentMapping": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "mapping_id": {
+          "type": "string"
+        },
+        "source_ontology_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "target_ontology_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "source_concept_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "target_concept_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "mapping_property": {
+          "enum": [
+            "skos:exactMatch",
+            "skos:closeMatch",
+            "skos:broadMatch",
+            "skos:narrowMatch",
+            "skos:relatedMatch"
+          ]
+        },
+        "method": {
+          "enum": [
+            "label-similarity",
+            "structural-graph",
+            "rule-based",
+            "manual",
+            "hybrid"
+          ]
+        },
+        "grounding_confidence": {
+          "$ref": "#/$defs/confidence"
+        },
+        "decision_status": {
+          "enum": [
+            "candidate",
+            "proposed",
+            "accepted",
+            "rejected",
+            "deferred",
+            "revoked"
+          ]
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ref"
+          },
+          "minItems": 1
+        },
+        "prov_event_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "reviewer_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "reviewed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "schema_version",
+        "mapping_id",
+        "source_ontology_sha256",
+        "target_ontology_sha256",
+        "source_concept_ref",
+        "target_concept_ref",
+        "mapping_property",
+        "method",
+        "grounding_confidence",
+        "decision_status",
+        "evidence_refs",
+        "prov_event_ref",
+        "created_at"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "decision_status": {
+                "const": "accepted"
+              }
+            },
+            "required": [
+              "decision_status"
+            ]
+          },
+          "then": {
+            "required": [
+              "reviewer_ref",
+              "reviewed_at"
+            ]
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "provEvent": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_id": {
+          "type": "string"
+        },
+        "prov_type": {
+          "enum": [
+            "prov:Entity",
+            "prov:Activity",
+            "prov:Agent"
+          ]
+        },
+        "event_kind": {
+          "enum": [
+            "import",
+            "create",
+            "align",
+            "validate",
+            "reason",
+            "propose-change",
+            "approve-change",
+            "apply-change",
+            "rollback",
+            "retract",
+            "supersede",
+            "promote",
+            "quarantine",
+            "resolve-conflict"
+          ]
+        },
+        "entity_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ref"
+          }
+        },
+        "activity_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "agent_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "used_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ref"
+          }
+        },
+        "generated_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ref"
+          }
+        },
+        "derived_from_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ref"
+          }
+        },
+        "was_revision_of_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "had_role_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "started_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "ended_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "event_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "fixture_only": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "schema_version",
+        "event_id",
+        "prov_type",
+        "event_kind",
+        "entity_refs",
+        "used_refs",
+        "generated_refs",
+        "derived_from_refs",
+        "started_at",
+        "event_sha256",
+        "fixture_only"
+      ],
+      "additionalProperties": false
+    },
+    "shaclResult": {
+      "type": "object",
+      "properties": {
+        "focus_node": {
+          "$ref": "#/$defs/ref"
+        },
+        "result_severity": {
+          "enum": [
+            "sh:Violation",
+            "sh:Warning",
+            "sh:Info"
+          ]
+        },
+        "source_constraint_component": {
+          "$ref": "#/$defs/ref"
+        },
+        "result_path": {
+          "$ref": "#/$defs/ref"
+        },
+        "result_message": {
+          "type": "string"
+        },
+        "source_shape": {
+          "$ref": "#/$defs/ref"
+        },
+        "value_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "value_lexical": {
+          "type": "string"
+        },
+        "result_id": {
+          "$ref": "#/$defs/ref"
+        }
+      },
+      "required": [
+        "focus_node",
+        "result_severity",
+        "source_constraint_component"
+      ],
+      "additionalProperties": false
+    },
+    "shaclValidationReport": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "report_id": {
+          "type": "string"
+        },
+        "shacl_version": {
+          "enum": [
+            "SHACL-1.0",
+            "SHACL-1.2-draft",
+            "other"
+          ]
+        },
+        "data_graph_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "shapes_graph_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "conforms": {
+          "type": "boolean"
+        },
+        "results": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/shaclResult"
+          }
+        },
+        "processor_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "processor_version": {
+          "type": "string"
+        },
+        "report_graph_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "generated_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "provenance_event_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "fixture_only": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "schema_version",
+        "report_id",
+        "shacl_version",
+        "data_graph_sha256",
+        "shapes_graph_sha256",
+        "conforms",
+        "results",
+        "processor_ref",
+        "processor_version",
+        "report_graph_sha256",
+        "generated_at",
+        "fixture_only"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "conforms": {
+                "const": true
+              }
+            },
+            "required": [
+              "conforms"
+            ]
+          },
+          "then": {
+            "properties": {
+              "results": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "conforms": {
+                "const": false
+              }
+            },
+            "required": [
+              "conforms"
+            ]
+          },
+          "then": {
+            "properties": {
+              "results": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "reasoningCertificate": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "certificate_id": {
+          "type": "string"
+        },
+        "ontology_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "asserted_graph_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "conclusion_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ref"
+          },
+          "minItems": 1
+        },
+        "premise_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ref"
+          }
+        },
+        "inference_step_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "certificate_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "certificate_artifact_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "reasoner_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "reasoner_version": {
+          "type": "string"
+        },
+        "checker_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "checker_version": {
+          "type": "string"
+        },
+        "checker_status": {
+          "enum": [
+            "not-run",
+            "accepted",
+            "rejected",
+            "error"
+          ]
+        },
+        "claim_scope": {
+          "const": "derivation-validity-under-declared-asserted-graph-and-assumptions"
+        },
+        "assumption_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ref"
+          }
+        },
+        "trusted_computing_base_profile_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "engine_soundness_status": {
+          "enum": [
+            "not-assessed",
+            "partially-assessed",
+            "independently-assessed",
+            "verified-for-declared-profile"
+          ]
+        },
+        "generated_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "fixture_only": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "schema_version",
+        "certificate_id",
+        "ontology_sha256",
+        "asserted_graph_sha256",
+        "conclusion_refs",
+        "premise_refs",
+        "inference_step_count",
+        "certificate_sha256",
+        "certificate_artifact_ref",
+        "reasoner_ref",
+        "reasoner_version",
+        "checker_ref",
+        "checker_version",
+        "checker_status",
+        "claim_scope",
+        "assumption_refs",
+        "trusted_computing_base_profile_ref",
+        "engine_soundness_status",
+        "generated_at",
+        "fixture_only"
+      ],
+      "additionalProperties": false
+    },
+    "bitemporalFact": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "fact_id": {
+          "type": "string"
+        },
+        "subject_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "predicate_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "object_kind": {
+          "enum": [
+            "iri",
+            "literal",
+            "blank-node"
+          ]
+        },
+        "object_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "object_lexical": {
+          "type": "string"
+        },
+        "object_datatype": {
+          "$ref": "#/$defs/ref"
+        },
+        "object_language": {
+          "type": "string"
+        },
+        "named_graph_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "trust_label": {
+          "enum": [
+            "unverified",
+            "provisional",
+            "corroborated",
+            "reviewed",
+            "approved",
+            "restricted",
+            "revoked"
+          ]
+        },
+        "assertion_state": {
+          "enum": [
+            "asserted",
+            "retracted",
+            "superseded"
+          ]
+        },
+        "valid_from": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "valid_to": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "transaction_from": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "transaction_to": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "provenance_event_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "record_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "close_dont_overwrite": {
+          "const": true
+        }
+      },
+      "required": [
+        "schema_version",
+        "fact_id",
+        "subject_ref",
+        "predicate_ref",
+        "object_kind",
+        "named_graph_ref",
+        "trust_label",
+        "assertion_state",
+        "valid_from",
+        "valid_to",
+        "transaction_from",
+        "transaction_to",
+        "provenance_event_ref",
+        "record_sha256",
+        "close_dont_overwrite"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "object_kind": {
+                "const": "iri"
+              }
+            },
+            "required": [
+              "object_kind"
+            ]
+          },
+          "then": {
+            "required": [
+              "object_ref"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "object_kind": {
+                "const": "literal"
+              }
+            },
+            "required": [
+              "object_kind"
+            ]
+          },
+          "then": {
+            "required": [
+              "object_lexical"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "object_kind": {
+                "const": "blank-node"
+              }
+            },
+            "required": [
+              "object_kind"
+            ]
+          },
+          "then": {
+            "required": [
+              "object_ref"
+            ]
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "asOfQuery": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "query_id": {
+          "type": "string"
+        },
+        "ontology_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "valid_time_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "transaction_time_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "named_graph_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ref"
+          }
+        },
+        "query_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "result_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "executed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "fixture_only": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "schema_version",
+        "query_id",
+        "ontology_sha256",
+        "valid_time_at",
+        "transaction_time_at",
+        "named_graph_refs",
+        "query_ref",
+        "executed_at",
+        "fixture_only"
+      ],
+      "additionalProperties": false
+    },
+    "crosswalkResolutionReceipt": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "receipt_id": {
+          "type": "string"
+        },
+        "event_cid": {
+          "$ref": "#/$defs/ref"
+        },
+        "mapping_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "source_concept_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "target_concept_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "mapping_property": {
+          "enum": [
+            "skos:exactMatch",
+            "skos:closeMatch",
+            "skos:broadMatch",
+            "skos:narrowMatch",
+            "skos:relatedMatch"
+          ]
+        },
+        "grounding_confidence": {
+          "$ref": "#/$defs/confidence"
+        },
+        "resolution_decision": {
+          "enum": [
+            "accept",
+            "reject",
+            "defer",
+            "human-review-required"
+          ]
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ref"
+          },
+          "minItems": 1
+        },
+        "provenance_event_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "reviewer_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "resolved_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "fixture_only": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "schema_version",
+        "receipt_id",
+        "event_cid",
+        "mapping_ref",
+        "source_concept_ref",
+        "target_concept_ref",
+        "mapping_property",
+        "grounding_confidence",
+        "resolution_decision",
+        "evidence_refs",
+        "provenance_event_ref",
+        "resolved_at",
+        "fixture_only"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "resolution_decision": {
+                "const": "accept"
+              }
+            },
+            "required": [
+              "resolution_decision"
+            ]
+          },
+          "then": {
+            "required": [
+              "reviewer_ref"
+            ]
+          }
+        }
+      ]
+    },
+    "agentOntologyWrite": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "write_id": {
+          "type": "string"
+        },
+        "ontology_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "origin": {
+          "enum": [
+            "pdm_import",
+            "agent_write",
+            "manual"
+          ]
+        },
+        "source_of_truth_mode": {
+          "enum": [
+            "read-only",
+            "writable",
+            "not-applicable"
+          ]
+        },
+        "confidence": {
+          "$ref": "#/$defs/confidence"
+        },
+        "staging_state": {
+          "enum": [
+            "canonical-import",
+            "staged",
+            "quarantined",
+            "promoted",
+            "rejected"
+          ]
+        },
+        "conflict_screen_status": {
+          "enum": [
+            "not-run",
+            "clear",
+            "conflicts-found"
+          ]
+        },
+        "conflict_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ref"
+          }
+        },
+        "promotion_basis": {
+          "enum": [
+            "human-review",
+            "reinforcement-across-runs"
+          ]
+        },
+        "promotion_evidence_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ref"
+          }
+        },
+        "source_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "prov_event_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "fixture_only": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "schema_version",
+        "write_id",
+        "ontology_sha256",
+        "origin",
+        "source_of_truth_mode",
+        "confidence",
+        "staging_state",
+        "conflict_screen_status",
+        "conflict_refs",
+        "source_ref",
+        "prov_event_ref",
+        "created_at",
+        "fixture_only"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "origin": {
+                "const": "pdm_import"
+              }
+            },
+            "required": [
+              "origin"
+            ]
+          },
+          "then": {
+            "properties": {
+              "source_of_truth_mode": {
+                "const": "read-only"
+              },
+              "staging_state": {
+                "const": "canonical-import"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "origin": {
+                "const": "agent_write"
+              }
+            },
+            "required": [
+              "origin"
+            ]
+          },
+          "then": {
+            "properties": {
+              "source_of_truth_mode": {
+                "enum": [
+                  "read-only",
+                  "not-applicable"
+                ]
+              },
+              "staging_state": {
+                "enum": [
+                  "staged",
+                  "quarantined",
+                  "promoted",
+                  "rejected"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "staging_state": {
+                "const": "promoted"
+              }
+            },
+            "required": [
+              "staging_state"
+            ]
+          },
+          "then": {
+            "required": [
+              "promotion_basis",
+              "promotion_evidence_refs"
+            ]
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "namedGraphAuthorityProfile": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "graph_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "graph_version": {
+          "type": "string"
+        },
+        "authority_subject_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "trust_label": {
+          "enum": [
+            "unverified",
+            "provisional",
+            "corroborated",
+            "reviewed",
+            "approved",
+            "restricted",
+            "revoked"
+          ]
+        },
+        "own_capabilities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "parent_capability_sets": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "composed_capabilities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "composition_rule": {
+          "const": "restrictive-intersection"
+        },
+        "composition_never_widens": {
+          "const": true
+        },
+        "provenance_event_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "fixture_only": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "schema_version",
+        "graph_ref",
+        "graph_version",
+        "authority_subject_ref",
+        "trust_label",
+        "own_capabilities",
+        "parent_capability_sets",
+        "composed_capabilities",
+        "composition_rule",
+        "composition_never_widens",
+        "provenance_event_ref",
+        "created_at",
+        "fixture_only"
+      ],
+      "additionalProperties": false
+    },
+    "conflictRecord": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "conflict_id": {
+          "type": "string"
+        },
+        "conflict_kind": {
+          "type": "string"
+        },
+        "subject_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ref"
+          },
+          "minItems": 1
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ref"
+          },
+          "minItems": 1
+        },
+        "detection_method_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "status": {
+          "enum": [
+            "open",
+            "quarantined",
+            "under-review",
+            "resolved",
+            "accepted-with-limitation",
+            "rejected"
+          ]
+        },
+        "resolution_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "reviewer_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "detected_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "resolved_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "fixture_only": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "schema_version",
+        "conflict_id",
+        "conflict_kind",
+        "subject_refs",
+        "source_refs",
+        "detection_method_ref",
+        "status",
+        "detected_at",
+        "fixture_only"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "resolved"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "required": [
+              "resolution_ref",
+              "reviewer_ref",
+              "resolved_at"
+            ]
+          }
+        }
+      ]
+    },
+    "ontologyChangeProposal": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "change_id": {
+          "type": "string"
+        },
+        "ontology_id": {
+          "type": "string"
+        },
+        "source_version": {
+          "type": "string"
+        },
+        "target_version": {
+          "type": "string"
+        },
+        "source_ontology_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "proposed_ontology_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "change_items": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "properties": {
+              "change_kind": {
+                "enum": [
+                  "add",
+                  "modify",
+                  "deprecate",
+                  "replace",
+                  "reclassify",
+                  "constraint-change"
+                ]
+              },
+              "concept_or_relation_ref": {
+                "$ref": "#/$defs/ref"
+              },
+              "change_summary": {
+                "type": "string"
+              },
+              "replacement_ref": {
+                "$ref": "#/$defs/ref"
+              }
+            },
+            "required": [
+              "change_kind",
+              "concept_or_relation_ref",
+              "change_summary"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "compatibility": {
+          "enum": [
+            "backward-compatible",
+            "breaking",
+            "unknown"
+          ]
+        },
+        "blast_radius_report_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "shacl_report_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "reasoning_certificate_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "rollback_plan_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "action_admission_receipt_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "status": {
+          "enum": [
+            "proposed",
+            "evaluated",
+            "approved",
+            "rejected",
+            "applied",
+            "rolled-back"
+          ]
+        },
+        "reviewer_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ref"
+          }
+        },
+        "provenance_event_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "fixture_only": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "schema_version",
+        "change_id",
+        "ontology_id",
+        "source_version",
+        "target_version",
+        "source_ontology_sha256",
+        "proposed_ontology_sha256",
+        "change_items",
+        "compatibility",
+        "rollback_plan_ref",
+        "status",
+        "reviewer_refs",
+        "provenance_event_ref",
+        "created_at",
+        "fixture_only"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "applied"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "required": [
+              "blast_radius_report_ref",
+              "shacl_report_ref",
+              "reasoning_certificate_ref",
+              "action_admission_receipt_ref",
+              "reviewer_refs"
+            ],
+            "properties": {
+              "reviewer_refs": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "compiledToolContract": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "tool_id": {
+          "type": "string"
+        },
+        "ontology_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "ontology_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "operation": {
+          "enum": [
+            "query",
+            "create",
+            "update",
+            "delete",
+            "align",
+            "validate",
+            "reason",
+            "propose-change"
+          ]
+        },
+        "input_schema_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "output_schema_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "constraint_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ref"
+          }
+        },
+        "enforcement_phase": {
+          "enum": [
+            "generation-time",
+            "pre-write",
+            "write-transaction",
+            "post-write-validation"
+          ]
+        },
+        "closed_world": {
+          "type": "boolean"
+        },
+        "unknown_entity_policy": {
+          "enum": [
+            "reject",
+            "quarantine",
+            "review"
+          ]
+        },
+        "unknown_attribute_policy": {
+          "enum": [
+            "reject",
+            "quarantine",
+            "review"
+          ]
+        },
+        "unknown_relationship_policy": {
+          "enum": [
+            "reject",
+            "quarantine",
+            "review"
+          ]
+        },
+        "generated_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "fixture_only": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "schema_version",
+        "tool_id",
+        "ontology_sha256",
+        "ontology_ref",
+        "operation",
+        "input_schema_sha256",
+        "output_schema_sha256",
+        "constraint_refs",
+        "enforcement_phase",
+        "closed_world",
+        "unknown_entity_policy",
+        "unknown_attribute_policy",
+        "unknown_relationship_policy",
+        "generated_at",
+        "fixture_only"
+      ],
+      "additionalProperties": false
+    },
+    "actionAdmissionReceipt": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "receipt_id": {
+          "type": "string"
+        },
+        "request_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "ontology_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "policy_version": {
+          "type": "string"
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "action_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "target_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "decision": {
+          "enum": [
+            "allow",
+            "deny",
+            "quarantine",
+            "human-review-required"
+          ]
+        },
+        "closed_world": {
+          "const": true
+        },
+        "unknown_entity_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ref"
+          }
+        },
+        "unknown_attribute_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ref"
+          }
+        },
+        "unknown_relationship_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ref"
+          }
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ref"
+          },
+          "minItems": 1
+        },
+        "provenance_event_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "decided_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "fixture_only": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "schema_version",
+        "receipt_id",
+        "request_sha256",
+        "ontology_sha256",
+        "policy_version",
+        "actor_ref",
+        "action_ref",
+        "target_ref",
+        "decision",
+        "closed_world",
+        "unknown_entity_refs",
+        "unknown_attribute_refs",
+        "unknown_relationship_refs",
+        "evidence_refs",
+        "provenance_event_ref",
+        "decided_at",
+        "fixture_only"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "decision": {
+                "const": "allow"
+              }
+            },
+            "required": [
+              "decision"
+            ]
+          },
+          "then": {
+            "properties": {
+              "unknown_entity_refs": {
+                "maxItems": 0
+              },
+              "unknown_attribute_refs": {
+                "maxItems": 0
+              },
+              "unknown_relationship_refs": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

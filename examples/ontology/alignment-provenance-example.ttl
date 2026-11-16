@@ -1,0 +1,33 @@
+@prefix ex: <urn:fixture:ontology:> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:sourceScheme a skos:ConceptScheme ;
+    skos:prefLabel "Synthetic source concept scheme"@en .
+
+ex:targetScheme a skos:ConceptScheme ;
+    skos:prefLabel "Synthetic target concept scheme"@en .
+
+ex:sourceConcept a skos:Concept ;
+    skos:inScheme ex:sourceScheme ;
+    skos:prefLabel "Detect signals"@en ;
+    skos:closeMatch ex:targetConcept .
+
+ex:targetConcept a skos:Concept ;
+    skos:inScheme ex:targetScheme ;
+    skos:prefLabel "Signal detection"@en .
+
+ex:alignmentAgent a prov:Agent .
+
+ex:alignmentActivity a prov:Activity ;
+    prov:used ex:sourceScheme, ex:targetScheme ;
+    prov:wasAssociatedWith ex:alignmentAgent ;
+    prov:startedAtTime "2026-11-12T16:30:00Z"^^xsd:dateTime ;
+    prov:endedAtTime "2026-11-12T16:30:00Z"^^xsd:dateTime .
+
+ex:alignmentAssertion a prov:Entity ;
+    prov:wasGeneratedBy ex:alignmentActivity ;
+    prov:wasAttributedTo ex:alignmentAgent ;
+    prov:wasDerivedFrom ex:sourceConcept, ex:targetConcept ;
+    prov:generatedAtTime "2026-11-12T16:30:00Z"^^xsd:dateTime .
