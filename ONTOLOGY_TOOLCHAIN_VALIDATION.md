@@ -1,7 +1,7 @@
 # Ontology Toolchain Validation Record — UNIVERSALIS
 
-Branch: implementation/repository-foundation-2026-11-12  
-Contract version: 1.0.0  
+Branch: implementation/repository-foundation-2026-11-12
+Contract version: 1.0.0
 Status: **Passed** — shared JSON Schema contracts, semantic invariants and RDF/Turtle examples.
 
 ## Coverage

@@ -1,8 +1,8 @@
 # Ontology Toolchain Architecture — UNIVERSALIS
 
-**Owner:** The UNIVERSALIS Ontology repository  
-**Boundary:** Public, open, inspectable, independently operable  
-**Status:** Contract foundation and toolchain mapping; specialized engines remain candidates pending verification  
+**Owner:** The UNIVERSALIS Ontology repository
+**Boundary:** Public, open, inspectable, independently operable
+**Status:** Contract foundation and toolchain mapping; specialized engines remain candidates pending verification
 **Canonical ontology:** `Master_Ontology_Human_and_Intelligence.md` (eight foundation schemes: H-K, H-C, H-S, H-P, I-K, I-C, I-S, I-P). This toolchain does not replace or rewrite it.
 
 ## 1. Architectural position
